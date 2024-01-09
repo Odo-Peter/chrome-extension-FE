@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { setToken } from './services/video';
-
-import { routes } from './utils/routesPath';
 import { Toaster } from 'react-hot-toast';
 
+import { setToken } from './services/video';
+
+import Landing from './pages/Landing';
+import Home from './pages/Home';
+import GetStarted from './pages/GetStarted';
+import FileDetails from './pages/FileDetails';
+import Auth from './pages/Auth';
+import Feed from './pages/Feed';
+
 const App = () => {
-  const [, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('currentUser');
@@ -20,12 +26,23 @@ const App = () => {
   }, []);
 
   return (
-    <main className="bg-[#fff]/10 max-w-[1440px]">
+    <main className="">
       <Toaster />
       <Routes>
-        {routes.map((route, idx) => (
-          <Route key={idx} path={route.path} element={route.element} />
-        ))}
+        <Route exact path={'/'} element={user ? <Home /> : <Landing />} />
+        <Route
+          exact
+          path={'/video_uploads'}
+          element={user ? <Home /> : <Auth />}
+        />
+        <Route exact path={'/feed'} element={user ? <Feed /> : <Auth />} />
+        <Route exact path={'/get_started'} element={<GetStarted />} />
+        <Route
+          exact
+          path={'/file_details/:id'}
+          element={user ? <FileDetails /> : <Auth />}
+        />
+        <Route exact path={'/auth/sign_in'} element={<Auth />} />
       </Routes>
     </main>
   );

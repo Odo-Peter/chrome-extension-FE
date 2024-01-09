@@ -7,6 +7,7 @@
  * - handleEmailChange, email: checks for email and handles the sending in the home page
  */
 
+import toast from 'react-hot-toast';
 import copy from '../assets/copy.svg';
 import { socials } from '../utils/dummyData';
 
@@ -16,6 +17,17 @@ const ShareVIds = ({
   email,
   url,
 }) => {
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success('Url copied', {
+        duration: 4000,
+      });
+    } catch (err) {
+      console.error('Async: Could not copy text: ', err);
+    }
+  };
+
   return (
     <div className="flex flex-col pr-4">
       <div className="mb-14">
@@ -47,11 +59,11 @@ const ShareVIds = ({
         </form>
 
         {/* Mobile devices */}
-        <div className="relative bg-primary-50 border border-primary-100 bg-opacity-40 text-[0.7rem] md:hidden w-full rounded-md p-3">
+        <div className="clipboard relative bg-primary-50 border border-primary-100 bg-opacity-40 text-[0.7rem] md:hidden w-full rounded-md p-3">
           {`${url.substring(0, 34)}...`}
 
           <button
-            onClick={() => console.log('copied')}
+            onClick={copyToClipboard}
             className="flex outline-none gap-[5px] absolute right-2 top-[50%] -translate-y-1/2  text-primary-900 text-[0.75rem] px-3 border border-primary-800 py-1 rounded-md hover:bg-primary-100 transition-all cursor-pointer"
           >
             <img alt="copy" src={copy} className="h-4 w-4" />
@@ -59,11 +71,11 @@ const ShareVIds = ({
         </div>
 
         {/* Tablet and larger devices */}
-        <div className="hidden relative bg-primary-50 border border-primary-100 bg-opacity-40 text-[0.8rem] md:block w-full md:w-[80%] lg:w-[60%] rounded-md p-3">
-          {`${url.substring(0, url.length)}...`}
+        <div className="clipboard hidden relative bg-primary-50 border border-primary-100 bg-opacity-40 text-[0.8rem] md:block w-full md:w-[80%] lg:w-[60%] rounded-md p-3">
+          {url}
 
           <button
-            onClick={() => console.log('copied')}
+            onClick={copyToClipboard}
             className="flex outline-none gap-[5px] absolute right-2 top-[50%] -translate-y-1/2  text-primary-900 text-[0.75rem] px-3 border border-primary-800 py-1 rounded-md hover:bg-primary-100 transition-all cursor-pointer"
           >
             <img alt="copy" src={copy} className="h-4 w-4" />

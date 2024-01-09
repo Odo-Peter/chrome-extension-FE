@@ -7,6 +7,7 @@
  * - olderFiles : sorts the userDB and returns the files that are older than 7days
  */
 
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { format, parseISO } from 'date-fns';
@@ -158,7 +159,7 @@ const VideoFeed = ({ recentFiles, olderFiles }) => {
                   <div className="flex justify-between ">
                     <div className="flex flex-col">
                       <Link to={`/file_details/${file.id}`}>
-                        <h4 className="text-[0.8rem] text-primary-900 font-bold">
+                        <h4 className="text-[0.8rem] text-primary-900 font-bold underline">
                           {file.title}
                         </h4>
                       </Link>
@@ -169,9 +170,13 @@ const VideoFeed = ({ recentFiles, olderFiles }) => {
                         {format(parseISO(file.date), 'MMMM, d, yyyy')}
                       </p>
                     </div>
-                    <div className="flex gap-4">
-                      <PiShareNetworkFill className="opacity-80 cursor-pointer hover:opacity-100" />
-                      <PiDotsThreeOutlineVertical className="opacity-80 cursor-pointer hover:opacity-100" />
+                    <div className="flex gap-x-4">
+                      <Link to={`/file_details/${file.id}`}>
+                        <PiShareNetworkFill className="opacity-80 cursor-pointer hover:opacity-100" />
+                      </Link>
+                      <Link to={`/file_details/${file.id}`}>
+                        <PiDotsThreeOutlineVertical className="opacity-80 cursor-pointer hover:opacity-100" />
+                      </Link>
                     </div>
                   </div>
                 </div>
