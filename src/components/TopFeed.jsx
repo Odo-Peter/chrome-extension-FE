@@ -9,31 +9,46 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import DropDown from './DropDown';
-
-import logo from '../assets/android-chrome-512x512.png';
-import avatar from '../assets/icons8.png';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { BiSearch } from 'react-icons/bi';
 
+import logo from '../assets/android-chrome-512x512.png';
+import avatar from '../assets/icons8.png';
+
+import DropDown from './DropDown';
+import toast from 'react-hot-toast';
+
 const TopFeed = ({ message, isFeed, boldText }) => {
   const [user, setUser] = useState('');
+  const [googlePhoto, setGooglePhoto] = useState('');
   const [dropDown, setDropDown] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('currentUser');
+    const avatar = window.localStorage.getItem('googlePhoto');
 
     if (loggedInUser) {
       const user = JSON.parse(loggedInUser);
       setUser(user);
     }
+
+    setGooglePhoto(avatar ? avatar : null);
   }, []);
 
-  const handleDropDownModal = () => {
-    console.log('Clicked lyka biyaatchhhh!!!');
-    setDropDown(!dropDown);
+  const handleLogout = () => {
+    toast.success('Hope to see you soon', {
+      duration: 4000,
+    });
+
+    window.localStorage.removeItem('currentUser');
+    window.localStorage.removeItem('googlePhoto');
+    setTimeout(() => {
+      navigate('/auth/sign_in');
+    }, 5000);
   };
 
   return (
@@ -53,16 +68,24 @@ const TopFeed = ({ message, isFeed, boldText }) => {
             </h1>
           </Link>
           <div className="flex gap-2 items-center relative">
-            <img src={avatar} alt="avatar" className="w-10 h-10" />
-            <p className="text-sm text-primary-900">Odo Peter</p>
+            <img
+              src={!googlePhoto ? avatar : googlePhoto}
+              alt="avatar"
+              className="w-10 h-10 rounded-full"
+            />
+            <p className="text-sm text-primary-900">
+              {user
+                ? `${user?.fullname.substring(0, 9)}...`
+                : 'Fetching details..'}
+            </p>
             <RiArrowDropDownLine
               className="cursor-pointer w-8 h-8 -ml-2 opacity-80 hover:opacity-100 rounded-full "
-              onClick={handleDropDownModal}
+              onClick={() => setDropDown((prev) => !prev)}
             />
             {dropDown && (
               <div className="absolute top-full z-20 right-2">
                 {' '}
-                <DropDown />{' '}
+                <DropDown handleLogout={handleLogout} />{' '}
               </div>
             )}
           </div>
@@ -71,10 +94,12 @@ const TopFeed = ({ message, isFeed, boldText }) => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-y-3 justify-start">
           <div>
             <h3 className="text-lg md:text-2xl font-bold text-primary-900">
-              Hello, Odo Peter
+              Hello, {user ? user?.fullname : 'Fetching details..'}
             </h3>
 
-            <p className="text-[0.7rem] text-primary-400 pb-4">{user?.email}</p>
+            <p className="text-[0.7rem] text-primary-400 pb-4">
+              {user ? user?.email : 'Fetching details..'}
+            </p>
 
             {boldText ? (
               <p className={'text-[0.8rem] text-primary-200'}>

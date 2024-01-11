@@ -7,13 +7,13 @@ import toast from 'react-hot-toast';
 import { createUser, getAllUsers, getGoogleAccount } from '../services/users';
 import { loginUser } from '../services/login';
 
-import github from '../assets/icons8-github.svg';
 import google from '../assets/icons8-google.svg';
 import icon from '../assets/android-chrome-512x512.png';
 
 const Auth = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState('');
+  const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
@@ -37,9 +37,12 @@ const Auth = () => {
       if (!checkedUser) {
         try {
           await createUser({
+            fullname: res.name,
             email: res.email,
             password: res.id,
           });
+
+          window.localStorage.setItem('googlePhoto', res?.picture);
         } catch (err) {
           console.log(err);
         }
@@ -51,18 +54,22 @@ const Auth = () => {
           password: res.id,
         });
 
-        if (availableUser) {
-          toast.success(`Logging you in as ${res.name}`);
+        window.localStorage.setItem('googlePhoto', res?.picture);
 
-          window.localStorage.clear();
+        if (availableUser) {
+          toast.success('Glad to have you back', {
+            duration: 4000,
+          });
+
+          window.localStorage.removeItem('currentUser');
           window.localStorage.setItem(
             'currentUser',
             JSON.stringify(availableUser)
           );
 
           setTimeout(() => {
-            navigate('/home');
-          }, 4000);
+            navigate('/video_uploads');
+          }, 5000);
         }
       } catch (err) {
         console.log(err);
@@ -78,6 +85,7 @@ const Auth = () => {
     if (!checkedUser) {
       try {
         await createUser({
+          fullname,
           email,
           password,
         });
@@ -93,14 +101,15 @@ const Auth = () => {
       });
 
       if (availableUser) {
-        toast.success(
-          `Logging you in as ... ${availableUser.email.split('@')[0]}`
-        );
+        toast.success('Glad to have you back', {
+          duration: 4000,
+        });
 
+        setFullname('');
         setEmail('');
         setPassword('');
 
-        window.localStorage.clear();
+        window.localStorage.removeItem('currentUser');
         window.localStorage.setItem(
           'currentUser',
           JSON.stringify(availableUser)
@@ -116,8 +125,8 @@ const Auth = () => {
   };
 
   return (
-    <section className="w-full pt-6 px-8 md:pt-10 md:flex md:flex-col md:justify-center md:overflow-y-hidden">
-      <div className="hidden md:flex md:mb-10">
+    <section className="w-full py-6 px-8 md:flex md:flex-col md:justify-center">
+      <div className="hidden md:flex md:mb-8">
         <div className="hidden md:flex md:items-center md:justify-start gap-1 cursor-pointer py-1 rounded-md">
           <img alt="logo" src={icon} className="h-6 w-6" />
           <h1 className="font-semibold text-primary-800">HelpMeOut</h1>
@@ -145,12 +154,6 @@ const Auth = () => {
             Continue with Google
           </p>
         </button>
-        <button className="flex items-center gap-2 border border-primary-900 w-full md:w-[50%] lg:w-[35%] justify-center p-2 rounded-xl cursor-pointer hover:bg-primary-50 hover:transition-all">
-          <img alt="google" src={github} className="h-6 w-6" />
-          <p className="font-medium text-primary-900 text-[0.82rem]">
-            Continue with GitHub
-          </p>
-        </button>
       </div>
 
       <div className="flex items-center justify-center mb-5 ">
@@ -163,12 +166,27 @@ const Auth = () => {
         <div className="mb-5 md:mb-8 md:flex md:flex-col md:w-full md:items-center">
           <div className="mb-3 md:w-[50%] lg:w-[35%] md:flex md:flex-col justify-center">
             <p className="text-[0.8rem] text-primary-900 pb-[5px] font-medium">
-              Email
+              Fullname
             </p>
             <input
               type="text"
               required
+              value={fullname}
+              name="fullname"
+              onChange={(e) => setFullname(e.target.value)}
+              className="border border-primary-200 rounded-lg outline-none py-[8px] text-[0.8rem] px-4 w-full placeholder:text-[0.8rem] placeholder:font-medium placeholder:text-primary-500  focus:placeholder:opacity-70"
+              placeholder="Enter your full name"
+            />
+          </div>
+          <div className="mb-3 md:w-[50%] lg:w-[35%] md:flex md:flex-col justify-center">
+            <p className="text-[0.8rem] text-primary-900 pb-[5px] font-medium">
+              Email
+            </p>
+            <input
+              type="email"
+              required
               value={email}
+              name="email"
               onChange={(e) => setEmail(e.target.value)}
               className="border border-primary-200 rounded-lg outline-none py-[8px] text-[0.8rem] px-4 w-full placeholder:text-[0.8rem] placeholder:font-medium placeholder:text-primary-500  focus:placeholder:opacity-70"
               placeholder="Enter your email address"
@@ -181,6 +199,7 @@ const Auth = () => {
             <input
               type="password"
               required
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="border border-primary-200 text-[0.8rem] rounded-lg outline-none py-[8px] px-4 w-full placeholder:text-[0.8rem] placeholder:font-medium placeholder:text-primary-500 focus:placeholder:opacity-70"

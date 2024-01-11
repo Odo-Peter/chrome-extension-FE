@@ -14,6 +14,7 @@ const CTA = () => {
         spy={true}
         smooth={true}
         duration={1000}
+        offset={-250}
         className="text-[0.75rem] text-primary-50 px-8 py-2 bg-primary-800 outline-none border-none rounded-md hover:bg-primary-500 transition-all cursor-pointer"
       >
         Save Video
@@ -23,7 +24,7 @@ const CTA = () => {
         Don't know how to upload?{' '}
         <Link
           className="font-semibold text-primary-800 underline opacity-90 hover:opacity-100"
-          to={'/get_started'}
+          to={'/how_to_upload'}
         >
           Read the docs
         </Link>

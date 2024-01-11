@@ -30,18 +30,10 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route exact path={'/'} element={user ? <Home /> : <Landing />} />
-        <Route
-          exact
-          path={'/video_uploads'}
-          element={user ? <Home /> : <Auth />}
-        />
-        <Route exact path={'/feed'} element={user ? <Feed /> : <Auth />} />
+        <Route exact path={'/video_uploads'} element={<Home />} />
+        <Route exact path={'/feed'} element={<Feed />} />
         <Route exact path={'/get_started'} element={<GetStarted />} />
-        <Route
-          exact
-          path={'/file_details/:id'}
-          element={user ? <FileDetails /> : <Auth />}
-        />
+        <Route exact path={'/file_details/:id'} element={<FileDetails />} />
         <Route exact path={'/auth/sign_in'} element={<Auth />} />
       </Routes>
     </main>

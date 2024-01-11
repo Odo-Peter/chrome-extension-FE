@@ -19,7 +19,6 @@ const VideoPanel = ({ src }) => {
           <video
             className="w-full rounded-md shadow-md relative mb-4"
             controls
-            autoPlay
             muted
           >
             <source src={src} />

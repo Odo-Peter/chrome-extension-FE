@@ -38,8 +38,8 @@ const VideoDetails = ({
           </p>
           <input
             type="file"
+            accept=".mp4, .webm"
             onChange={handleFileChange}
-            accept=".webm .mp4"
             className="border-0 outline-none bg-primary-50 file:text-[0.8rem] file:text-opacity-80 text-[0.8rem] w-full rounded-md py-[11px] px-3 file:border-0 file:bg-primary-900/10 file:py-1 file:px-4 file:text-primary-900 file:rounded-md file:mr-4 file:hover:cursor-pointer file:transition"
           />
           <button

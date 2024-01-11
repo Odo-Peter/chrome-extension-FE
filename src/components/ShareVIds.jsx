@@ -20,7 +20,7 @@ const ShareVIds = ({
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url);
-      toast.success('Url copied', {
+      toast.success('URL copied', {
         duration: 4000,
       });
     } catch (err) {

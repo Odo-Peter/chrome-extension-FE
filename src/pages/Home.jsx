@@ -53,7 +53,9 @@ const Home = () => {
       setTitle('');
       setFiles(null);
       setIsUploading(false);
-      toast.success('Redirecting to feeds..');
+      toast.success('Redirecting to feeds..', {
+        duration: 4000,
+      });
       setTimeout(() => {
         navigate('/feed');
       }, 5000);
@@ -78,7 +80,7 @@ const Home = () => {
             handleUploads={handleUploads}
             isUploading={isUploading}
           />
-          <div className="flex flex-col gap-8 border-t md:border-t-0 md:border-l border-l-primary-100 pt-6 md:pl-6">
+          <div className="flex flex-col gap-8 border-t md:border-t-0 md:border-l border-l-primary-100 md:pl-6">
             <VideoPanel src={sourceFile ? sourceFile : null} />
           </div>
         </div>
