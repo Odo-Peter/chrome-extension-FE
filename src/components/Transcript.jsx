@@ -6,9 +6,9 @@
  * All transcription functionalities are handled in this page
  */
 
-import { dummyTranscripts } from '../utils/dummyData';
+// import { dummyTranscripts } from '../utils/dummyData';
 
-const Transcript = ({ videoSrc }) => {
+const Transcript = ({ videoSrc, transcript }) => {
   if (!videoSrc) {
     return (
       <div className="flex flex-col items-start border-primary-100 pl-4 border-l h-full">
@@ -37,13 +37,10 @@ const Transcript = ({ videoSrc }) => {
         </select>
       </div>
 
-      <div className=" flex flex-col overflow-y-auto mt-4 justify-center items-start h-[40vh]">
-        {dummyTranscripts.map((t) => (
-          <div key={t.time} className="flex justify-center gap-4 mb-2">
-            <p className="text-[0.75rem] text-primary-500">{t.time}</p>
-            <p className="text-[0.75rem] text-primary-700">{t.transcript}</p>
-          </div>
-        ))}
+      <div className=" flex flex-col overflow-y-auto mt-4 justify-center items-start h-[40vh] lg:h-[47.5vh] border border-primary-100 px-4 py-[5px] rounded-lg">
+        <p className="text-[0.75rem] break-words mt-[25rem] md:mt-[20rem] lg:mt-[14rem] text-primary-500">
+          {transcript}
+        </p>
       </div>
     </div>
   );

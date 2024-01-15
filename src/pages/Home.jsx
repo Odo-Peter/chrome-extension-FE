@@ -46,19 +46,23 @@ const Home = () => {
       data.set('file', files[0]);
 
       await createVideo(data);
-    } catch (error) {
-      console.log(error);
       setIsUploading(false);
-    } finally {
-      setTitle('');
-      setFiles(null);
-      setIsUploading(false);
-      toast.success('Redirecting to feeds..', {
+      toast.success('Uploaded successfully.', {
         duration: 4000,
       });
+
       setTimeout(() => {
         navigate('/feed');
       }, 5000);
+    } catch (error) {
+      console.log(error);
+      setIsUploading(false);
+      toast.error('Ooops, something went wrong.', {
+        duration: 5000,
+      });
+    } finally {
+      setTitle('');
+      setFiles(null);
     }
   };
 

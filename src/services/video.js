@@ -38,14 +38,14 @@ export const getUserVideo = async (id) => {
 //     return res.data;
 //   };
 
-//   const deleteOne = async (id) => {
-//     const config = {
-//       headers: { Authorization: token },
-//     };
+export const deleteVideo = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  };
 
-//     const res = await axios.delete(`${baseURL}/${id}`, config);
-//     return res.data;
-//   };
+  const res = await axios.delete(`${BASE_URL}/${id}`, config);
+  return res.data;
+};
 
 //   // eslint-disable-next-line import/no-anonymous-default-export
 //   export default { setToken, getUserTodos, createTodo, deleteOne, updateTodo };

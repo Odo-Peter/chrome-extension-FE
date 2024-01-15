@@ -10,11 +10,11 @@
 import { useState, useEffect } from 'react';
 
 import { isPastSevenDays } from '../utils/date';
+import { getAllUsers } from '../services/users';
 
 import TopFeed from '../components/TopFeed';
 import VideoFeed from '../components/VideoFeed';
 import Footer from '../components/Footer';
-import { getAllUsers } from '../services/users';
 
 const Feed = () => {
   const [user, setUser] = useState(null);
@@ -48,10 +48,15 @@ const Feed = () => {
       ? uniqueUser[0]?.videos?.filter((vid) => isPastSevenDays(vid?.date) > 7)
       : null;
 
+  // const handleFileOptions = () => {
+  //   console.log('clicked');
+  //   setOptionsDropDown((prev) => !prev);
+  // };
+
   return (
     <section>
       <TopFeed message={'Here are your uploaded videos'} isFeed={true} />
-      <div className="px-10 lg:px-20 py-6 lg:py-10 mt-48">
+      <div className="px-10 lg:px-20 py-6 lg:py-10 mt-44">
         <VideoFeed recentFiles={recentFiles} olderFiles={olderFiles} />
       </div>
       <Footer />

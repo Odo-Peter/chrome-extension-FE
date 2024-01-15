@@ -73,7 +73,7 @@ const FileDetails = () => {
       )}
       <TopFeed
         message={'Home / Recent Videos /'}
-        boldText={video?.title}
+        boldText={video?.title ? video?.title : 'Fetching details'}
         isFeed={false}
       />
 
@@ -85,11 +85,11 @@ const FileDetails = () => {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-10 px-10 lg:px-20 py-6 lg:py-10 mt-48">
-          <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
-            <div className="border border-primary-50 w-full p-3 rounded-lg mb-6">
+        <div className="flex flex-col gap-10 px-10 lg:px-20 py-6 lg:py-10 mt-44">
+          <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
+            <div className="border border-primary-100 w-full p-3 rounded-lg shadow-xl mb-6">
               <video
-                className="w-full rounded-md shadow-md mb-4"
+                className="w-full rounded-md mb-4"
                 controls
                 preload="metadata"
               >
@@ -97,14 +97,14 @@ const FileDetails = () => {
               </video>
 
               <p
-                className="text-[0.75rem] text-primary-100 font-medium
+                className="text-[0.75rem] text-primary-200 font-medium
               "
               >
                 {format(parseISO(video?.date), 'MMMM, d, yyyy')}
               </p>
             </div>
             <div>
-              <Transcript videoSrc={true} />
+              <Transcript videoSrc={true} transcript={video?.transcript} />
             </div>
           </div>
 

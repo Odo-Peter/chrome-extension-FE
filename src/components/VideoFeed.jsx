@@ -7,18 +7,11 @@
  * - olderFiles : sorts the userDB and returns the files that are older than 7days
  */
 
-// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { format, parseISO } from 'date-fns';
-
-import {
-  PiDotsThreeOutlineVertical,
-  PiShareNetworkFill,
-  PiSmileyWink,
-  PiSmileyXEyes,
-} from 'react-icons/pi';
+import { PiSmileyWink, PiSmileyXEyes } from 'react-icons/pi';
 import { BiArrowFromRight, BiLoader } from 'react-icons/bi';
+import VideoCard from './VideoCard';
 
 const VideoFeed = ({ recentFiles, olderFiles }) => {
   return (
@@ -53,43 +46,7 @@ const VideoFeed = ({ recentFiles, olderFiles }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 place-content-center gap-x-6 gap-y-8 ">
               {recentFiles &&
                 recentFiles.map((file) => (
-                  <div
-                    className="border border-primary-100 rounded-lg w-full lg:w-[95%] flex flex-col gap-4 p-4 shadow-lg hover:shadow-xl"
-                    key={file.id}
-                  >
-                    <video
-                      className="w-full rounded-md shadow-md mb-2"
-                      controls
-                      preload="metadata"
-                    >
-                      <source
-                        src={
-                          file.videoPath
-                            ? file.videoPath
-                            : `${file.videoPath}#t-0.1`
-                        }
-                      />
-                    </video>
-                    <div className="flex justify-between ">
-                      <div className="flex flex-col">
-                        <Link to={`/file_details/${file.id}`}>
-                          <h4 className="text-[0.8rem] text-primary-900 font-bold">
-                            {file.title}
-                          </h4>
-                        </Link>
-                        <p
-                          className="text-[0.75rem] text-primary-100 font-medium
-              "
-                        >
-                          {format(parseISO(file.date), 'MMMM, d, yyyy')}
-                        </p>
-                      </div>
-                      <div className="flex gap-4">
-                        <PiShareNetworkFill className="opacity-80 cursor-pointer hover:opacity-100" />
-                        <PiDotsThreeOutlineVertical className="opacity-80 cursor-pointer hover:opacity-100" />
-                      </div>
-                    </div>
-                  </div>
+                  <VideoCard file={file} key={file?.id} />
                 ))}
             </div>
           </>
@@ -139,47 +96,7 @@ const VideoFeed = ({ recentFiles, olderFiles }) => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 place-content-center gap-x-6 gap-y-8 ">
               {olderFiles.map((file) => (
-                <div
-                  className="border border-primary-100 rounded-lg w-full lg:w-[95%] flex flex-col gap-4 p-4 shadow-lg hover:shadow-xl relative"
-                  key={file.id}
-                >
-                  <video
-                    className="w-full rounded-md shadow-md relative mb-2"
-                    controls
-                    preload="metadata"
-                  >
-                    <source
-                      src={
-                        file.videoPath
-                          ? file.videoPath
-                          : `${file.videoPath}#t-0.1`
-                      }
-                    />
-                  </video>
-                  <div className="flex justify-between ">
-                    <div className="flex flex-col">
-                      <Link to={`/file_details/${file.id}`}>
-                        <h4 className="text-[0.8rem] text-primary-900 font-bold underline">
-                          {file.title}
-                        </h4>
-                      </Link>
-                      <p
-                        className="text-[0.75rem] text-primary-100 font-medium
-              "
-                      >
-                        {format(parseISO(file.date), 'MMMM, d, yyyy')}
-                      </p>
-                    </div>
-                    <div className="flex gap-x-4">
-                      <Link to={`/file_details/${file.id}`}>
-                        <PiShareNetworkFill className="opacity-80 cursor-pointer hover:opacity-100" />
-                      </Link>
-                      <Link to={`/file_details/${file.id}`}>
-                        <PiDotsThreeOutlineVertical className="opacity-80 cursor-pointer hover:opacity-100" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+                <VideoCard file={file} key={file?.id} />
               ))}
             </div>
           )}
