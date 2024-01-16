@@ -60,7 +60,7 @@ const FileDetails = () => {
   return (
     <section
       className={
-        !isPopup ? 'relative overflow-x-hidden' : 'relative overflow-hidden'
+        !isPopup ? 'relative overflow-x-hidden' : 'relative overflow-hidden '
       }
     >
       {isPopup && (
@@ -85,9 +85,9 @@ const FileDetails = () => {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-10 px-10 lg:px-20 py-6 lg:py-10 mt-44">
-          <div className="grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-2">
-            <div className="border border-primary-100 w-full p-3 rounded-lg shadow-xl mb-6">
+        <div className="flex flex-col gap-10 px-10 lg:px-20 py-6 lg:py-10 mt-44 w-full">
+          <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 pb-4">
+            <div className="border border-primary-100  w-full p-3 rounded-lg shadow-xl mb-6">
               <video
                 className="w-full rounded-md mb-4"
                 controls

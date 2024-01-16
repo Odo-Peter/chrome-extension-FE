@@ -6,12 +6,14 @@
  * All transcription functionalities are handled in this page
  */
 
+import { BiSmile } from 'react-icons/bi';
+
 // import { dummyTranscripts } from '../utils/dummyData';
 
 const Transcript = ({ videoSrc, transcript }) => {
   if (!videoSrc) {
     return (
-      <div className="flex flex-col items-start border-primary-100 pl-4 border-l h-full">
+      <div className="flex flex-col items-start ">
         <h4 className=" text-primary-900 font-semibold pb-2">Transcript</h4>
         <p className="text-[0.8rem] text-primary-200">
           Cannot generate any transcripts at the moment, try uploading a screen
@@ -22,8 +24,10 @@ const Transcript = ({ videoSrc, transcript }) => {
     );
   }
 
+  //border-primary-100 pt-6 md:pt-0  md:border-l border-t md:border-t-0 md:pl-6
+
   return (
-    <div className="flex flex-col justify-start border-primary-100 pt-6 md:pt-0 border-t md:border-t-0 md:pl-6 md:border-l h-full">
+    <div className="flex flex-col justify-start border-t md:border-t-0 md:border-l border-l-primary-200 pl-6">
       <h4 className=" text-primary-900 font-semibold pb-2">Transcript</h4>
       <div>
         <select
@@ -37,11 +41,20 @@ const Transcript = ({ videoSrc, transcript }) => {
         </select>
       </div>
 
-      <div className=" flex flex-col overflow-y-auto mt-4 justify-center items-start h-[40vh] lg:h-[47.5vh] border border-primary-100 px-4 py-[5px] rounded-lg">
-        <p className="text-[0.75rem] break-words mt-[25rem] md:mt-[20rem] lg:mt-[14rem] text-primary-500">
-          {transcript}
-        </p>
-      </div>
+      {transcript === '' ? (
+        <div className=" flex flex-col justify-center items-center lg:h-[50vh] h-[40vh] gap-4">
+          <BiSmile className="w-16 h-16 text-primary-600" />
+          <p className="text-[0.8rem] text-primary-400 text-center">
+            Ooops, looks like your video has no sound to it, if this is not what
+            you intended, try deleting it, re-record and upload again, to get
+            accurate transcripts.
+          </p>
+        </div>
+      ) : (
+        <div className=" flex flex-col overflow-y-auto mt-4  items-start lg:h-[46.5vh] h-[40vh] border border-primary-100 px-4 py-2 rounded-lg">
+          <p className="text-[0.75rem]">{transcript}</p>
+        </div>
+      )}
     </div>
   );
 };

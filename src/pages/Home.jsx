@@ -8,17 +8,16 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { BiArrowFromLeft } from 'react-icons/bi';
 
 import { createVideo } from '../services/video';
-
-import { BiArrowFromLeft } from 'react-icons/bi';
 
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
 import TopFeed from '../components/TopFeed';
 import VideoDetails from '../components/VideoDetails';
 import VideoPanel from '../components/VideoPanel';
-import toast from 'react-hot-toast';
 
 const Home = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -48,12 +47,12 @@ const Home = () => {
       await createVideo(data);
       setIsUploading(false);
       toast.success('Uploaded successfully.', {
-        duration: 4000,
+        duration: 3000,
       });
 
       setTimeout(() => {
         navigate('/feed');
-      }, 5000);
+      }, 4000);
     } catch (error) {
       console.log(error);
       setIsUploading(false);
@@ -61,6 +60,7 @@ const Home = () => {
         duration: 5000,
       });
     } finally {
+      setIsUploading(false);
       setTitle('');
       setFiles(null);
     }
