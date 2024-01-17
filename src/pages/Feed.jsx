@@ -48,11 +48,6 @@ const Feed = () => {
       ? uniqueUser[0]?.videos?.filter((vid) => isPastSevenDays(vid?.date) > 7)
       : null;
 
-  // const handleFileOptions = () => {
-  //   console.log('clicked');
-  //   setOptionsDropDown((prev) => !prev);
-  // };
-
   return (
     <section>
       <TopFeed message={'Here are your uploaded videos'} isFeed={true} />

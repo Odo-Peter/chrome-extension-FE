@@ -17,7 +17,6 @@ const VideoCard = ({ file }) => {
   const navigate = useNavigate();
 
   const handleVideoDelete = async (id) => {
-    console.log(id);
     setIsDeleting(true);
     try {
       await deleteVideo(id);
